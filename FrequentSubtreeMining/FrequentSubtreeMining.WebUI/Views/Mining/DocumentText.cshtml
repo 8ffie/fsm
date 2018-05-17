@@ -1,0 +1,13 @@
+﻿@using FrequentSubtreeMining.WebUI.ViewModels;
+
+@model DocumentViewModel
+
+<div>
+    <h2>Текст документа</h2>
+    <textarea>
+    @foreach (var str in Model.Text)
+    {
+        @str
+    }
+    </textarea>
+</div>

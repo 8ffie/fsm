@@ -1,0 +1,5 @@
+D:\Effie\Projects\FrequentSubtreeMining\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.csprojResolveAssemblyReference.cache
+D:\Effie\Projects\FrequentSubtreeMining\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\bin\Debug\FrequentSubtreeMining.Algorithm.dll
+D:\Effie\Projects\FrequentSubtreeMining\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\bin\Debug\FrequentSubtreeMining.Algorithm.pdb
+D:\Effie\Projects\FrequentSubtreeMining\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.dll
+D:\Effie\Projects\FrequentSubtreeMining\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.pdb
