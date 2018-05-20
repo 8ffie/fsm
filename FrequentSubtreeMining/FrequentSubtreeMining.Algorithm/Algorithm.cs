@@ -25,12 +25,12 @@ namespace FrequentSubtreeMining.Algorithm
         /// <summary>
         /// Объект списка расширенных поддеревьев
         /// </summary>
-        protected internal readonly ExtendedSubtree ExtendedSubtrees = new ExtendedSubtree();
+        protected internal readonly ExtendedSubtrees ExtendedSubtrees = new ExtendedSubtrees();
 
         /// <summary>
         /// Объект списка частых поддеревьев
         /// </summary>
-        protected internal readonly FrequentSubtree FrequentSubtrees = new FrequentSubtree();
+        protected internal readonly FrequentSubtrees FrequentSubtrees = new FrequentSubtrees();
 
         /// <summary>
         /// Словарь поддеревьев из 1 узла

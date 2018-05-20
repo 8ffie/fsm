@@ -42,8 +42,8 @@
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
     <Compile Include="Models\DepthEntries.cs" />
-    <Compile Include="Models\ExtendedSubtree.cs" />
-    <Compile Include="Models\FrequentSubtree.cs" />
+    <Compile Include="Models\ExtendedSubtrees.cs" />
+    <Compile Include="Models\FrequentSubtrees.cs" />
     <Compile Include="Models\RootEntry.cs" />
     <Compile Include="Models\SearchParameters.cs" />
     <Compile Include="Models\SearchResult.cs" />

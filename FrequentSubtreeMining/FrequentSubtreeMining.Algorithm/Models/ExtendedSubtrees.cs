@@ -2,7 +2,7 @@
 
 namespace FrequentSubtreeMining.Algorithm.Models
 {
-    public class ExtendedSubtree
+    public class ExtendedSubtrees
     {
         /// <summary>
         /// Список расширенных поддеревьев

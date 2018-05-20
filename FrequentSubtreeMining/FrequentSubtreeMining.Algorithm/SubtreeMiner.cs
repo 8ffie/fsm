@@ -321,7 +321,7 @@ namespace FrequentSubtreeMining.Algorithm
         /// <param name="freqList">Список поддеревьев</param>
         /// <param name="support">Поддержка</param>
         /// <param name="depth">Глубина</param>
-        private void PruneAfterConnection(FrequentSubtree freqList, int support, int depth)
+        private void PruneAfterConnection(FrequentSubtrees freqList, int support, int depth)
         {
             List<Tree> freqSubtreesAtDepth = freqList.GetFrequentsAtDepth(depth + 1);
             foreach (Tree tree in freqSubtreesAtDepth)

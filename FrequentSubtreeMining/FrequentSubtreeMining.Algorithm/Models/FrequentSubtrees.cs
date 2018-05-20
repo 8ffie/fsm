@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace FrequentSubtreeMining.Algorithm.Models
 {
-    public class FrequentSubtree
+    public class FrequentSubtrees
     {
         /// <summary>
         /// Максимальная глубина
@@ -13,7 +13,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <summary>
         /// Конструктор
         /// </summary>
-        internal FrequentSubtree()
+        internal FrequentSubtrees()
         {
             Frequent1NodeTrees = new Dictionary<string, Tree>();
             Frequent2NodesTrees = new Dictionary<string, Tree>();
