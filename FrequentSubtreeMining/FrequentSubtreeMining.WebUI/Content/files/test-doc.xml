@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE schemes [ ]>
+<schemes>
+  <scheme>
+    <name>Диодный кольцевой смеситель</name>
+    <description>Двойной сбалансированный смеситель</description>
+    <components>
+      <component id="1">
+        <name>G1</name>
+        <description>Идеальный источник переменного напряжения</description>
+        <properties>
+          <property>
+            <name>Пиковое напряжение</name>
+            <notation>U</notation>
+            <value units="V">3</value>
+          </property>
+          <property>
+            <name>Частота</name>
+            <notation>f</notation>
+            <value units="kHz">10</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="3">
+        <name>R1</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="Ohm">50</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="3"/>
+        </nodes>
+      </component>
+      <component id="2">
+        <name>GND1</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="4">
+        <name>T1</name>
+        <description>Идеальный симметричный трансформатор</description>
+        <properties>
+          <property>
+            <name>Коэффициент трансформации напряжения обмотки 1</name>
+            <notation>T1</notation>
+            <value>1</value>
+          </property>
+          <property>
+            <name>Коэффициент трансформации напряжения обмотки 2</name>
+            <notation>T2</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="2"/>
+            <node ref="3"/>
+            <node ref="4"/>
+            <node ref="5"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="5">
+        <name>GND2</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="5"/>
+        </nodes>
+      </component>
+      <component id="6">
+        <name>VD1</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="8"/>
+        </nodes>
+      </component>
+      <component id="7">
+        <name>VD2</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="8">
+        <name>VD3</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="6"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="9">
+        <name>VD4</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="6"/>
+            <node ref="8"/>
+        </nodes>
+      </component>
+      <component id="10">
+        <name>T2</name>
+        <description>Идеальный симметричный трансформатор</description>
+        <properties>
+          <property>
+            <name>Коэффициент трансформации напряжения обмотки 1</name>
+            <notation>T1</notation>
+            <value>1</value>
+          </property>
+          <property>
+            <name>Коэффициент трансформации напряжения обмотки 2</name>
+            <notation>T2</notation>
+            <value>1</value>
+          </property>
+        </properties>
+         <nodes>
+            <node ref="7"/>
+            <node ref="8"/>
+            <node ref="9"/>
+            <node ref="11"/>
+            <node ref="12"/>
+        </nodes>
+      </component>
+      <component id="11">
+        <name>R2</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <purpose>Нагрузка</purpose>
+            <value units="Ohm">50</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="9"/>
+            <node ref="10"/>
+        </nodes>
+      </component>
+      <component id="12">
+        <name>GND3</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="10"/>
+        </nodes>
+      </component>
+      <component id="13">
+        <name>R3</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="Ohm">50</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="11"/>
+            <node ref="13"/>
+        </nodes>
+      </component>
+      <component id="14">
+        <name>G2</name>
+        <description>Идеальный источник переменного напряжения</description>
+        <properties>
+          <property>
+            <name>Пиковое напряжение</name>
+            <notation>U</notation>
+            <value units="mV">1</value>
+          </property>
+          <property>
+            <name>Частота</name>
+            <notation>f</notation>
+            <value units="kHz">1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="12"/>
+            <node ref="13"/>
+        </nodes>
+      </component>
+      <component id="15">
+        <name>GND4</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="12"/>
+        </nodes>
+      </component>
+    </components>
+    <nodes>
+      <node id="1"/>
+      <node id="2"/>
+      <node id="3"/>
+      <node id="4"/>
+      <node id="5"/>
+      <node id="6"/>
+      <node id="7"/>
+      <node id="8"/>
+      <node id="9"/>
+      <node id="10"/>
+      <node id="11"/>
+      <node id="12"/>
+      <node id="13"/>
+    </nodes>
+  </scheme>
+  <scheme>
+    <name>Активный полосовой фильтр</name>
+    <components>
+      <component id="1">
+        <name>G1</name>
+        <description>Идеальный источник переменного напряжения</description>
+        <properties>
+          <property>
+            <name>Пиковое напряжение</name>
+            <notation>U</notation>
+            <value units="V">1</value>
+          </property>
+          <property>
+            <name>Частота</name>
+            <notation>f</notation>
+            <value units="GHz">1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="2">
+        <name>GND1</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="3">
+        <name>R1</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="Ohm">390</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="4"/>
+        </nodes>
+      </component>
+      <component id="4">
+        <name>C1</name>
+        <description>Конденсатор</description>
+        <properties>
+          <property>
+            <name>Емкость</name>
+            <notation>С</notation>
+            <value units="nF">47</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="3"/>
+            <node ref="4"/>
+        </nodes>
+      </component>
+      <component id="5">
+        <name>R2</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="kOhm">5.6</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="5"/>
+        </nodes>
+      </component>
+      <component id="6">
+        <name>GND2</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="5"/>
+        </nodes>
+      </component>
+      <component id="7">
+        <name>C2</name>
+        <description>Конденсатор</description>
+        <properties>
+          <property>
+            <name>Емкость</name>
+            <notation>С</notation>
+            <value units="nF">47</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="8">
+        <name>R3</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="kOhm">3.9</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="3"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="9">
+        <name>DA1</name>
+        <description>Операционный усилитель</description>
+        <properties>
+          <property>
+            <name>Усиление напряжения</name>
+            <notation>G</notation>
+            <value>1e6</value>
+          </property>
+          <property>
+            <name>Абсолютное значение максимального выходного напряжения</name>
+            <notation>U</notation>
+            <value units="V">15</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="3"/>
+            <node ref="6"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="10">
+        <name>GND3</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="7"/>
+        </nodes>
+      </component>
+    </components>
+    <nodes>
+      <node id="1"/>
+      <node id="2"/>
+      <node id="3"/>
+      <node id="4"/>
+      <node id="5"/>
+      <node id="6"/>
+      <node id="7"/>
+    </nodes>
+  </scheme>
+  <scheme>
+    <name>Источник питания</name>
+    <components>
+      <component id="1">
+        <name>G1</name>
+        <description>Идеальный источник переменного напряжения</description>
+        <properties>
+          <property>
+            <name>Пиковое напряжение</name>
+            <notation>U</notation>
+            <value units="V">230</value>
+          </property>
+          <property>
+            <name>Частота</name>
+            <notation>f</notation>
+            <value units="Hz">50</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="2">
+        <name>GND1</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="3">
+        <name>R1</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="Ohm">0.5</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="3"/>
+        </nodes>
+      </component>
+      <component id="4">
+        <name>T1</name>
+        <description>Идеальный трансформатор</description>
+        <properties>
+          <property>
+            <name>Коэффициент трансформации напряжения</name>
+            <notation>T</notation>
+            <value>20</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="2"/>
+            <node ref="3"/>
+            <node ref="4"/>
+            <node ref="5"/>
+        </nodes>
+      </component>
+      <component id="5">
+        <name>VD1</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="6">
+        <name>VD2</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="7">
+        <name>GND2</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="8">
+        <name>VD3</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="5"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="9">
+        <name>VD4</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="5"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="10">
+        <name>C1</name>
+        <description>Конденсатор</description>
+        <properties>
+          <property>
+            <name>Емкость</name>
+            <notation>С</notation>
+            <value units="mF">1</value>
+          </property>
+        </properties>
+         <nodes>
+            <node ref="7"/>
+            <node ref="8"/>
+        </nodes>
+      </component>
+      <component id="11">
+        <name>GND3</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="8"/>
+        </nodes>
+      </component>
+      <component id="12">
+        <name>R2</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <purpose>Нагрузка</purpose>
+            <value units="Ohm">100</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="7"/>
+            <node ref="9"/>
+        </nodes>
+      </component>
+      <component id="13">
+        <name>GND4</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="9"/>
+        </nodes>
+      </component>
+    </components>
+    <nodes>
+      <node id="1"/>
+      <node id="2"/>
+      <node id="3"/>
+      <node id="4"/>
+      <node id="5"/>
+      <node id="6"/>
+      <node id="7"/>
+      <node id="8"/>
+      <node id="9"/>
+    </nodes>
+  </scheme>
+  <scheme>
+    <name>Мостовой выпрямитель</name>
+    <description>Полноволновой выпрямитель на 4 диодах</description>
+    <components>
+      <component id="1">
+        <name>R1</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="kOhm">1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="2">
+        <name>GND1</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="3">
+        <name>VD1</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="4"/>
+            <node ref="5"/>
+        </nodes>
+      </component>
+      <component id="4">
+        <name>VD2</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="3"/>
+        </nodes>
+      </component>
+      <component id="5">
+        <name>VD3</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="2"/>
+            <node ref="3"/>
+            <node ref="4"/>
+        </nodes>
+      </component>
+      <component id="6">
+        <name>VD4</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="2"/>
+            <node ref="5"/>
+        </nodes>
+      </component>
+      <component id="7">
+        <name>T1</name>
+        <description>Идеальный трансформатор</description>
+        <properties>
+          <property>
+            <name>Коэффициент трансформации напряжения</name>
+            <notation>T</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="4"/>
+            <node ref="5"/>
+            <node ref="6"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="8">
+        <name>G1</name>
+        <description>Идеальный источник переменного напряжения</description>
+        <properties>
+          <property>
+            <name>Пиковое напряжение</name>
+            <notation>U</notation>
+            <value units="V">308</value>
+          </property>
+          <property>
+            <name>Частота</name>
+            <notation>f</notation>
+            <value units="Hz">50</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="6"/>
+            <node ref="7"/>
+        </nodes>
+      </component>
+      <component id="9">
+        <name>GND2</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="7"/>
+        </nodes>
+      </component>
+    </components>
+    <nodes>
+      <node id="1"/>
+      <node id="2"/>
+      <node id="3"/>
+      <node id="4"/>
+      <node id="5"/>
+      <node id="6"/>
+      <node id="7"/>
+    </nodes>
+  </scheme>
+  <scheme>
+    <name>Полноволновой выпрямитель</name>
+    <description>Полноволновой выпрямитель на трансформаторе и 2 диодах.</description>
+    <components>
+      <component id="1">
+        <name>R1</name>
+        <description>Резистор</description>
+        <properties>
+          <property>
+            <name>Сопротивление</name>
+            <notation>R</notation>
+            <value units="kOhm">1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="2">
+        <name>GND1</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="2"/>
+        </nodes>
+      </component>
+      <component id="3">
+        <name>VD1</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="3"/>
+        </nodes>
+      </component>
+      <component id="4">
+        <name>VD2</name>
+        <description>Диод</description>
+        <properties>
+          <property>
+            <name>Ток насыщения</name>
+            <notation>I</notation>
+            <value units="A">1e-15</value>
+          </property>
+          <property>
+            <name>Коэффициент эмиссии</name>
+            <notation>N</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="1"/>
+            <node ref="4"/>
+        </nodes>
+      </component>
+      <component id="5">
+        <name>T1</name>
+        <description>Идеальный симметричный трансформатор</description>
+        <properties>
+          <property>
+            <name>Коэффициент трансформации напряжения обмотки 1</name>
+            <notation>T1</notation>
+            <value>1</value>
+          </property>
+          <property>
+            <name>Коэффициент трансформации напряжения обмотки 2</name>
+            <notation>T2</notation>
+            <value>1</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="2"/>
+            <node ref="3"/>
+            <node ref="4"/>
+            <node ref="5"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="6">
+        <name>G1</name>
+        <description>Идеальный источник переменного напряжения</description>
+        <properties>
+          <property>
+            <name>Пиковое напряжение</name>
+            <notation>U</notation>
+            <value units="V">308</value>
+          </property>
+          <property>
+            <name>Частота</name>
+            <notation>f</notation>
+            <value units="Hz">50</value>
+          </property>
+        </properties>
+        <nodes>
+            <node ref="5"/>
+            <node ref="6"/>
+        </nodes>
+      </component>
+      <component id="7">
+        <name>GND2</name>
+        <description>Заземление</description>
+        <nodes>
+            <node ref="6"/>
+        </nodes>
+      </component>
+    </components>
+    <nodes>
+      <node id="1"/>
+      <node id="2"/>
+      <node id="3"/>
+      <node id="4"/>
+      <node id="5"/>
+      <node id="6"/>
+    </nodes>
+  </scheme>
+</schemes>
