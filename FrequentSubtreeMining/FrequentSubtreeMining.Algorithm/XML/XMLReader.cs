@@ -56,6 +56,7 @@ namespace FrequentSubtreeMining.Algorithm.XML
                             break;
                     }
                 }
+                reader.Dispose();
             }
             catch
             {

@@ -38,7 +38,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
         public string[] ToStrings()
         {
             List<string> results = new List<string>();
-            results.Add(SearchParams.ToString());
+            results.AddRange(SearchParams.ToStrings());
             results.Add(Environment.NewLine);
             results.Add(string.Format("Прошло времени: {0} мс", TotalTimeElapsed));
             results.Add("Число найденных частых подграфов: " + FrequentSubtreesCount);

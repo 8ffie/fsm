@@ -232,7 +232,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
                     {
                         str += "\t";
                     }
-                    tagEntry.Add(str + "<" + item + ">");
+                    tagEntry.Add(str + "&lt;" + item + "&gt;");
                     tagStack.Push(item);
                     offsetCounter++;
                 }
@@ -245,7 +245,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
                         str += "\t";
                     }
                     string elem = tagStack.Pop();
-                    tagEntry.Add(str + "</" + elem + ">");
+                    tagEntry.Add(str + "&lt;/" + elem + "&gt;");
                 }
             }
             return tagEntry.ToArray();

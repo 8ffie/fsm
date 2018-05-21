@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace FrequentSubtreeMining.Algorithm.Models
@@ -8,12 +9,17 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <summary>
         /// Минимальная поддержка (доля частых поддеревьев)
         /// </summary>
-        private double minimumSupport;
+        public static double minimumSupport;
 
         /// <summary>
         /// Количество анализируемых деревьев
         /// </summary>
         internal static int treeNumber;
+
+        /// <summary>
+        /// Максимальное время поиска
+        /// </summary>
+        internal static long maxTime;
 
         /// <summary>
         /// Поддержка (число деревьев, в которых должны встречаться частые поддеревья)
@@ -44,7 +50,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <param name="maxNodeNumber">Максимальное число узлов</param>
         internal SearchParameters(double minimumSupport, int minNodeNumber, int maxNodeNumber)
         {
-            this.minimumSupport = minimumSupport;
+            SearchParameters.minimumSupport = minimumSupport;
             MinimumNodeNumber = minNodeNumber;
             MaximumNodeNumber = maxNodeNumber;
         }
@@ -55,7 +61,6 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <param name="another">Параметры поиска</param>
         internal SearchParameters(SearchParameters another)
         {
-            minimumSupport = another.minimumSupport;
             MinimumNodeNumber = another.MinimumNodeNumber;
             MaximumNodeNumber = another.MaximumNodeNumber;
         }
@@ -64,15 +69,15 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// Строковое представление параметров поиска
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public string[] ToStrings()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Условия поиска:");
-            sb.AppendLine(string.Format("Поддержка: {0}", minimumSupport));
-            sb.AppendLine(string.Format("Минимальное число узлов: {0}", MinimumNodeNumber));
-            sb.AppendLine(string.Format("Максимальное число узлов: {0}", MaximumNodeNumber));
-            sb.AppendLine(string.Format("Общее число деревьев: {0}", treeNumber));
-            return sb.ToString();
+            List<string> sb = new List<string>();
+            sb.Add("Условия поиска:");
+            sb.Add(string.Format("Поддержка: {0}", minimumSupport));
+            sb.Add(string.Format("Минимальное число узлов: {0}", MinimumNodeNumber));
+            sb.Add(string.Format("Максимальное число узлов: {0}", MaximumNodeNumber));
+            sb.Add(string.Format("Общее число деревьев: {0}", treeNumber));
+            return sb.ToArray();
         }
 
         /// <summary>

@@ -1,14 +1,8 @@
 ﻿using FrequentSubtreeMining.Algorithm.XML;
-using FrequentSubtreeMining.WebUI.ViewModels;
 using System;
 using System.IO;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using FrequentSubtreeMining;
-using System.Text;
 using FrequentSubtreeMining.Algorithm.Models;
 using FrequentSubtreeMining.Algorithm;
 
@@ -16,154 +10,83 @@ namespace FrequentSubtreeMining.WebUI.Controllers
 {
     public class MiningController : Controller
     {
-        // GET: Mining
         [HttpGet]
         public ViewResult Index()
         {
-            int minSize = 2;
-            int maxSize = 10;
-            double support = 0.3;
-            MiningViewModel model = new MiningViewModel()
-            {
-                MinimumNodeNumber = minSize,
-                MaximumNodeNumber = maxSize,
-                Support = support
-            };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public JsonResult Index(MiningViewModel model)
+        public JsonResult Search()
         {
             try
             {
-                string path = Path.Combine(Server.MapPath("~/Content/files"), Path.GetFileName(model.FileName));
-                List<XMLNode> NodeList = XMLReader.ReadXMLDocument(path);
-                SearchResult result = SubtreeMiner.Mine(NodeList, model.Support, model.MinimumNodeNumber, model.MaximumNodeNumber);
-                ResultViewModel viewModel = new ResultViewModel()
+                var form = Request.Form;
+                if (form != null)
                 {
-                    Results = result.ToStrings()
-                };
-                return Json("OK");
+                    int minSize, maxSize; double support;
+                    if (!int.TryParse(form.Get("minSize"), out minSize) || !int.TryParse(form.Get("maxSize"), out maxSize) || !double.TryParse(form.Get("support").Replace('.', ','), out support))
+                    {
+                        return Json(new { text = "Некорректный формат параметров поиска", code = -1 });
+                    }
+                    if (Request.Files.Count > 0)
+                    {
+                        var file = Request.Files[0];
+                        if (file.ContentType != "text/xml")
+                        {
+                            return Json(new { text = "Некорректный формат файла: файл должен быть формата XML", code = -1 });
+                        }
+                        string path = Path.Combine(Server.MapPath("~/Content/files"), Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                        List<XMLNode> NodeList = XMLReader.ReadXMLDocument(path);
+                        if (NodeList != null && NodeList.Count > 0)
+                        {
+                            SearchResult result = SubtreeMiner.Mine(NodeList, support, minSize, maxSize, 10);
+                            return Json(new { text = result.ToStrings(), code = 0 });
+                        }
+                        else
+                        {
+                            return Json(new { text = "Некорректный формат файла: файл не содержит деревья для поиска", code = -1 });
+                        }
+                    }
+                    else
+                    {
+                        return Json(new { text = "Файл не найден либо имеет некорректный формат", code = -1 });
+                    }
+                }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                return Json(new { text = "Ошибка:" + ex.Message.ToString(), code = -1 });
             }
-            return Json(" not OK");
-        }
-
-        [HttpPost]
-        public JsonResult Upload()
-        {
-            var upload = Request.Files[0];
-            if (upload != null)
-            {
-                // получаем имя файла
-                string path = Path.Combine(Server.MapPath("~/Content/files"), Path.GetFileName(upload.FileName));
-                // string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
-                upload.SaveAs(path);
-                string[] text = GetDocumentText(path);
-                return Json(new { fileName = upload.FileName, textContent = text });
-            }
-            return Json(null);
+            return Json(new { text = "Ошибка запроса: параметры поиска не могут быть получены", code = -1 });
         }
 
         //[HttpPost]
-        //public ActionResult Upload1(HttpPostedFileBase fileInput)
+        //public JsonResult Upload()
         //{
-        //    if (fileInput != null)
+        //    var upload = Request.Files[0];
+        //    if (upload != null)
         //    {
-        //        // получаем имя файла
-        //        string fileName = System.IO.Path.GetFileName(fileInput.FileName);
-        //        // сохраняем файл в папку Files в проекте
-        //        fileInput.SaveAs(Server.MapPath("~/Content/files/" + fileName));
+        //        string path = Path.Combine(Server.MapPath("~/Content/files"), Path.GetFileName(upload.FileName));
+        //        upload.SaveAs(path);
+        //        string[] text = GetDocumentText(path);
+        //        return Json(new { fileName = upload.FileName, textContent = text });
         //    }
-        //    return RedirectToAction("Index");
+        //    return Json(null);
         //}
 
-
-        //public ActionResult Search(int minSize, int maxSize, double support)
+        //private string[] GetDocumentText(string filename)
         //{
-        //    //if (NodeList != null)
-        //    //{
-        //        try
-        //        {
-        //            NodeList = XMLReader.ReadXMLDocument("test2.xml");
-        //            SearchResult result = SubtreeMiner.Mine(NodeList, support, minSize, maxSize);
-        //            ResultViewModel viewModel = new ResultViewModel()
-        //            {
-        //                Results = result.ToStrings()
-        //            };
-        //            return PartialView("~/Views/Mining/MiningResult.cshtml", viewModel);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            ViewBag.Message = "ERROR:" + ex.Message.ToString();
-        //        }
-        //    //}
-        //    return View("~/Views/Mining/Index.cshtml");
-        //}
-
-        //[HttpPost]
-        //public ActionResult file(HttpPostedFileBase file)
-        //{
-        //    if (file != null && file.ContentLength > 0)
-        //        try
-        //        {
-        //            string path = Path.GetFileName(file.FileName);
-        //            NodeList = XMLReader.ReadXMLDocument(path);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            ViewBag.Message = "ERROR:" + ex.Message.ToString();
-        //        }
-        //    else
+        //    List<string> stringList = new List<string>();
+        //    using (StreamReader fs = new StreamReader(filename))
         //    {
-        //        ViewBag.Message = "You have not specified a file.";
+        //        while (!fs.EndOfStream)
+        //        {
+        //            stringList.Add(fs.ReadLine());
+        //        }
         //    }
-        //    return View("~/Views/Mining/Index.cshtml");
+        //    return stringList.ToArray();
         //}
-
-        [HttpPost]
-        public ActionResult file(HttpPostedFileBase file)
-        {
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    string path = Path.Combine(Server.MapPath("~/Content/files"),
-                    Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                    ViewBag.Message = "File uploaded successfully";
-                    DocumentViewModel model = new DocumentViewModel()
-                    {
-                        Text = GetDocumentText(path)
-                    };
-                    return View("~/Views/Mining/DocumentText.cshtml", model);
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
-            else
-            {
-                ViewBag.Message = "You have not specified a file.";
-            }
-            return View("~/Views/Mining/Index.cshtml");
-        }
-
-        private string[] GetDocumentText(string filename)
-        {
-            List<string> stringList = new List<string>();
-            using (StreamReader fs = new StreamReader(filename))
-            {
-                while (!fs.EndOfStream)
-                {
-                    stringList.Add(fs.ReadLine());
-                }
-            }
-            return stringList.ToArray();
-        }
     }
 }
