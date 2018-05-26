@@ -34,6 +34,7 @@ namespace FrequentSubtreeMining.Algorithm
             SearchParameters searchParams = new SearchParameters(support, minNodeNumber, maxNodeNumber);
             SearchParameters.treeNumber = encList.Count;
             SearchParameters.maxTime = maxTimeSeconds * 1000; //в миллисекундах
+            SearchParameters.initialTrees = encList;
             SubtreeMiner treeMiner = new SubtreeMiner(searchParams);
             SearchResult miningResult = treeMiner.Mine(encList);
             miningResult.SearchParams = new SearchParameters(support, minNodeNumber, maxNodeNumber);

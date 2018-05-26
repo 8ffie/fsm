@@ -8,12 +8,12 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <summary>
         /// Разделитель узлов в записи кодировки
         /// </summary>
-        internal static readonly char Separator = ',';
+        public static readonly char Separator = ';';
 
         /// <summary>
         /// Знак возврата к корню
         /// </summary>
-        internal static readonly char UpSign = '^';
+        public static readonly char UpSign = '^';
 
         /// <summary>
         /// Id дерева
@@ -23,7 +23,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <summary>
         /// Корень дерева
         /// </summary>
-        internal TreeNode Root { get; set; }
+        public TreeNode Root { get; set; }
 
         /// <summary>
         /// Строковое представление дерева (кодировка)
@@ -32,6 +32,11 @@ namespace FrequentSubtreeMining.Algorithm.Models
         public override string ToString()
         {
             return string.Format("{0}:{1}", TreeId, this.ToDfsStringWithIndex());
+        }
+
+        public string ToString2()
+        {
+            return string.Format("{0}", this.ToDfsString());
         }
     }
 }

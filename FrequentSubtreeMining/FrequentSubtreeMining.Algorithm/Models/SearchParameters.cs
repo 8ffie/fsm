@@ -21,6 +21,8 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// </summary>
         internal static long maxTime;
 
+        public static List<TextTreeEncoding> initialTrees;
+
         /// <summary>
         /// Поддержка (число деревьев, в которых должны встречаться частые поддеревья)
         /// </summary>

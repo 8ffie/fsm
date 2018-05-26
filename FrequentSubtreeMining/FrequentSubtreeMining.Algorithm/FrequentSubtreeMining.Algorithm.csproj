@@ -55,6 +55,7 @@
     <Compile Include="SubtreeMiner.cs" />
     <Compile Include="Tools\Converter.cs" />
     <Compile Include="Tools\EncodingBuilder.cs" />
+    <Compile Include="Tools\GraphDrawingHelper.cs" />
     <Compile Include="Tools\SubtreeExtension.cs" />
     <Compile Include="Tools\DfsIndexBuilder.cs" />
     <Compile Include="XML\TreeNode.cs" />

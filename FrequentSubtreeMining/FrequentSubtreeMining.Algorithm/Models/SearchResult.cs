@@ -18,7 +18,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <summary>
         /// Частые подддеревья
         /// </summary>
-        internal List<Tree> FrequentSubtrees { get; set; }
+        public List<Tree> FrequentSubtrees { get; set; }
 
         /// <summary>
         /// Число найденных частых поддеревьев

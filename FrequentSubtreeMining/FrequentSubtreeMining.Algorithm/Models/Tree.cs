@@ -72,7 +72,7 @@ namespace FrequentSubtreeMining.Algorithm.Models
         /// <summary>
         /// Dfs-кодировка
         /// </summary>
-        internal string DfsString { get; private set; }
+        public string DfsString { get; private set; }
 
         /// <summary>
         /// Список dfs-кодов узлов

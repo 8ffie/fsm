@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FrequentSubtreeMining.Algorithm.Tools
 {
-    internal static class Converter
+    public static class Converter
     {
         /// <summary>
         /// Представление дерева в виде dfs-кодировки 
@@ -37,6 +37,18 @@ namespace FrequentSubtreeMining.Algorithm.Tools
         }
 
         /// <summary>
+        /// Представление дерева в виде dfs-кодировки с индексом
+        /// </summary>
+        /// <param name="tree">Кодировка дерева</param>
+        /// <returns>Dfs-кодировка дерева с индексом</returns>
+        public static string ToDfsString(this TextTreeEncoding tree)
+        {
+            Debug.Assert(tree != null);
+
+            return tree.Root.ToDfsString();
+        }
+
+        /// <summary>
         /// Представление дерева в виде dfs-кодировки
         /// </summary>
         /// <param name="itn">Корень дерева</param>
@@ -47,6 +59,18 @@ namespace FrequentSubtreeMining.Algorithm.Tools
             if (itn.Children != null && itn.Children.Count > 0)
             {
                 str = itn.Children.Aggregate(str, (current, c) => current + c.ToDfsString());
+            }
+            return str + TextTreeEncoding.UpSign.ToString() + TextTreeEncoding.Separator.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public static string ToMarkedDfsString(this TreeNode itn)
+        {
+            string str = (itn.Part) 
+                ? "(" + itn.Tag + ")" + TextTreeEncoding.Separator.ToString(CultureInfo.InvariantCulture)
+                : itn.Tag + TextTreeEncoding.Separator.ToString(CultureInfo.InvariantCulture);
+            if (itn.Children != null && itn.Children.Count > 0)
+            {
+                str = itn.Children.Aggregate(str, (current, c) => current + c.ToMarkedDfsString());
             }
             return str + TextTreeEncoding.UpSign.ToString() + TextTreeEncoding.Separator.ToString(CultureInfo.InvariantCulture);
         }

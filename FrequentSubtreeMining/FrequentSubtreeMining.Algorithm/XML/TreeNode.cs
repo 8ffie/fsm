@@ -1,30 +1,33 @@
 ﻿using FrequentSubtreeMining.Algorithm.Models;
 using FrequentSubtreeMining.Algorithm.Tools;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FrequentSubtreeMining.Algorithm.XML
 {
-    internal class TreeNode
+    public class TreeNode
     {
+        public bool Part { get; set; }
+
         /// <summary>
         /// Тэг-метка текущего узла
         /// </summary>
-        internal string Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>
         /// Dfs-индекс текущего узла
         /// </summary>
-        internal int DfsIndex { get; set; }
+        public int DfsIndex { get; set; }
 
         /// <summary>
         /// Глубина текущего узла
         /// </summary>
-        internal int Depth { get; set; }
+        public int Depth { get; set; }
 
         /// <summary>
         /// Проверка, является ли текущий узел корнем
         /// </summary>
-        internal bool IsRoot
+        public bool IsRoot
         {
             get { return Parent == null; }
         }
@@ -32,7 +35,7 @@ namespace FrequentSubtreeMining.Algorithm.XML
         /// <summary>
         /// Проверка, является ли текущий узел листом
         /// </summary>
-        internal bool IsLeaf
+        public bool IsLeaf
         {
             get { return (Children == null || Children.Count <= 0); }
         }
@@ -40,17 +43,17 @@ namespace FrequentSubtreeMining.Algorithm.XML
         /// <summary>
         /// Родительский узел текущего узла
         /// </summary>
-        internal TreeNode Parent { get; set; }
+        public TreeNode Parent { get; set; }
 
         /// <summary>
         /// Список детей текущего узла
         /// </summary>
-        internal List<TreeNode> Children { get; set; }
+        public List<TreeNode> Children { get; set; }
 
         /// <summary>
         /// Объект кодировки дерева с корнем в текущем узле
         /// </summary>
-        internal TextTreeEncoding Tree { get; set; }
+        public TextTreeEncoding Tree { get; set; }
 
         /// <summary>
         /// Сравнение деревьев
@@ -124,6 +127,125 @@ namespace FrequentSubtreeMining.Algorithm.XML
             if (strListX.Count == strListY.Count) return 0;
 
             return (strListX.Count > strListY.Count) ? -1 : 1;
+        }
+
+        /// <summary>
+        /// Проверка наличия поддерева по кодировкам
+        /// </summary>
+        /// <param name="treeEncoding">Кодировка дерева</param>
+        /// <param name="subtreeEncoding">Кодировка поддерева</param>
+        /// <param name="markedTree">Кодировка дерева с пометками узлов поддерева</param>
+        /// <returns>true, если дерево содержит заданное поддерева</returns>
+        public static bool ContainsSubtree(string treeEncoding, string subtreeEncoding, out TreeNode markedTree)
+        {
+            TextTreeEncoding treeEncodingObject = EncodingBuilder.ConvertToTextTreeEncodingWithoutTreeId(treeEncoding);
+            TextTreeEncoding subtreeEncodingObject = EncodingBuilder.ConvertToTextTreeEncodingWithoutTreeId(subtreeEncoding);
+            bool isSubtree = subtreeEncodingObject.Root.IsContainedIn(treeEncodingObject.Root);
+            markedTree = isSubtree ? treeEncodingObject.Root : null;
+            return isSubtree;
+        }
+
+        /// <summary>
+        /// Проверка, является ли текущее дерево поддеревом source
+        /// </summary>
+        /// <param name="source">Дерево-источник</param>
+        /// <returns>true, если текущее дерево является поддеревом</returns>
+        private bool IsSubtreeOf(TreeNode source)
+        {
+            if (Children == null || Children.Count == 0)
+            {
+                return true;
+            }
+            else if (source.Children == null || source.Children.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                Dictionary<TreeNode, int> coincidenceDict = new Dictionary<TreeNode, int>();
+                foreach (TreeNode ch in Children)
+                {
+                    string s = ch.ToDfsString();
+                    var coincidence = coincidenceDict.Keys.Where(x => x.ToDfsString() == s).FirstOrDefault();
+                    if (coincidence == null)
+                    {
+                        coincidenceDict.Add(ch, 1);
+                    }
+                    else
+                    {
+                        coincidenceDict[coincidence]++;
+                    }
+                }
+                //проверить Children на повторения. если есть повторяющиеся поддеревья, сделать словарь, сколько каких нужно найти
+                foreach (TreeNode treeNode in coincidenceDict.Keys) //если есть повторения, нужно проверять, одинаковые ли они. если они одинаковые, ставить счетчик, сколько нужно найти
+                {
+                    List<TreeNode> sameChildrenList = source.Children.Where(x => x.Tag == treeNode.Tag && !x.Part).ToList();
+                    if (sameChildrenList.Count >= coincidenceDict[treeNode])
+                    {
+                        int counter = 0;
+                        foreach (TreeNode sChild in sameChildrenList)
+                        {
+                            if (treeNode.IsSubtreeOf(sChild))
+                            {
+                                sChild.Part = true;
+                                counter++;
+                            }
+                        }
+                        if (counter < coincidenceDict[treeNode]) return false;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Проверка, содержится ли текущее поддерево в заданном дереве
+        /// </summary>
+        /// <param name="source">Дерево-источник</param>
+        /// <returns>true, если текущее поддерево содержится в дереве</returns>
+        private bool IsContainedIn(TreeNode source)
+        {
+            List<TreeNode> sameRootTrees = new List<TreeNode>();
+            RootSearchTraversal(Tag, source, sameRootTrees);
+            if (sameRootTrees.Count > 0)
+            {
+                bool isFound = false;
+                foreach (TreeNode sourceRoot in sameRootTrees)
+                {
+                    if (IsSubtreeOf(sourceRoot))
+                    {
+                        isFound = true;
+                        sourceRoot.Part = true;
+                    }
+                }
+                return isFound;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Обход дерева с поиском всех корней с соответствующей меткой
+        /// </summary>
+        /// <param name="rootTag">Метка корня</param>
+        /// <param name="source">Дерево</param>
+        /// <param name="previousList">Список узлов с меткой корня</param>
+        private void RootSearchTraversal(string rootTag, TreeNode source, List<TreeNode> previousList)
+        {
+            if (source.Tag == rootTag)
+            {
+                previousList.Add(source);
+            }
+            if (source.Children != null && source.Children.Count != 0)
+            {
+                foreach (TreeNode child in source.Children)
+                {
+                    RootSearchTraversal(rootTag, child, previousList);
+                }
+            }
         }
     }
 }
