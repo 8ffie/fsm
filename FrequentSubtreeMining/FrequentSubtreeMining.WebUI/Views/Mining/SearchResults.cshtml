@@ -1,0 +1,56 @@
+﻿<div id="searchResults" style="display:none;" class="animate-bottom">
+    <fieldset>
+        <legend>Результаты поиска</legend>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Список исходных графов</div>
+                    <div class="panel-body encodingList">
+                        <div class="vertical-list" id="initialTreeSelect"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Изображение выбранного исходного графа</div>
+                    <div class="panel-body encodingList">
+                        <canvas id="initialTreesCanvas">
+                            Отображение рисунков в элементе canvas (HTML5) не поддерживается Вашим браузером.
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Список частых подграфов</div>
+                    <div class="panel-body encodingList">
+                        <div class="vertical-list" id="freqTreeSelect"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label for="freqSupport">Поддержка выбранного подграфа:</label>
+                <p id="freqSupport">-</p>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Список исходных графов, в которых содержится выбранный подграф</div>
+                    <div class="panel-body encodingList">
+                        <div class="vertical-list" id="freqInitialTreeSelect"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Изображение выбранного подграфа</div>
+                    <div class="panel-body encodingList">
+                        <canvas id="freqTreesCanvas">
+                            Отображение рисунков в элементе canvas (HTML5) не поддерживается Вашим браузером.
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
