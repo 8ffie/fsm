@@ -8,3 +8,9 @@ D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\bin\
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.csprojResolveAssemblyReference.cache
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.dll
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.pdb
+D:\GameOfGit\fsm\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\bin\Debug\FrequentSubtreeMining.Algorithm.dll
+D:\GameOfGit\fsm\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\bin\Debug\FrequentSubtreeMining.Algorithm.pdb
+D:\GameOfGit\fsm\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.csprojResolveAssemblyReference.cache
+D:\GameOfGit\fsm\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.csproj.CoreCompileInputs.cache
+D:\GameOfGit\fsm\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.dll
+D:\GameOfGit\fsm\FrequentSubtreeMining\FrequentSubtreeMining.Algorithm\obj\Debug\FrequentSubtreeMining.Algorithm.pdb
