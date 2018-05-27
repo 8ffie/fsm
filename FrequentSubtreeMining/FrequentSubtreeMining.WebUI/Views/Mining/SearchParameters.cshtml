@@ -1,8 +1,11 @@
-﻿<div class="row">
+﻿@using FrequentSubtreeMining.Algorithm.Models;
+@Scripts.Render("~/bundles/jquery")
+
+<div class="row">
     <fieldset>
         <legend>Параметры поиска</legend>
         <div class="col-sm-4">
-            <form id="searchParameters" onchange="hideSearchParameters()">
+            <form id="searchParameters" onchange="clearSearchResults()">
                 <div class="form-group">
                     <label for="minSize">Минимальное число узлов:</label>
                     <input type="number" class="form-control" name="minSize" id="minSize" value="2" required>
@@ -13,12 +16,12 @@
                 </div>
                 <div class="form-group">
                     <label for="support">Минимальная поддержка:</label>
-                    <input type="number" class="form-control" name="support" id="support" value="0.2" step="0.01" required>
+                    <input type="number" class="form-control" name="support" title="Отношение числа графов, в которых встречается подграф, к общему графов в списке (диапазон значений: от 0 до 1)" id="support" value="0.2" step="0.01" required>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <label for="maxTime">Максимальное время поиска (в секундах):</label>
                     <input type="number" class="form-control" name="maxTime" id="maxTime" value="10" step="1" required>
-                </div>
+                </div>*@
                 <div class="form-group">
                     <label for="upload">Документ:</label>
                     <input type="file" name="upload" class="btn btn-default" id="uploadFile" required accept="text/xml" /><br />
@@ -30,7 +33,193 @@
 </div>
 
 <script>
-    function hideSearchParameters() {
+    //Сокрытие 
+    function clearSearchResults() {
         document.getElementById("searchResults").style.display = "none";
+        clearTreeList('freqTreeSelect');
+        clearTreeList('freqInitialTreeSelect');
+        document.getElementById('freqSupport').textContent = "-";
+        var c1 = document.getElementById('initialTreesCanvas');
+        var ctx1 = c1.getContext("2d");
+        ctx1.clearRect(0, 0, c1.width, c1.height);
+        var c2 = document.getElementById('freqTreesCanvas');
+        var ctx2 = c2.getContext("2d");
+        ctx2.clearRect(0, 0, c2.width, c2.height);
+    }
+
+    //Главная функция поиска
+    $('#searchParameters').submit(function (e) {
+        document.getElementById("loader").style.display = "block";
+        var form = document.getElementById('searchParameters');
+        var formData = new FormData(form);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Search", "Mining")',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (result) {
+                if (result.code != -1) {
+                    showTrees(result.doc, 'initialTreeSelect', 'initialTreesCanvas', 0, 1);
+                    showTrees(result.res, 'freqTreeSelect', 'freqTreesCanvas', 1, 1);
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("searchResults").style.display = "block";
+                }
+                else {
+                    alert(result.text);
+                }
+            }
+        });
+        e.preventDefault();
+    });
+
+    //Отображение деревьев списком
+    function showTrees(trees, listId, canvasId, comparator, createNewItems) {
+        var parent = clearTreeList(listId);
+        for (var i = 0; i < trees.length; i++) {
+            var input = createTreeListItem(trees[i]);
+            var child = document.createElement('a');
+            var form = document.createElement('form');
+            form.appendChild(input);
+            form.addEventListener("click", function (e) {
+                setListItemHighlight(listId, this);
+                var tempFormData = this;
+                if (createNewItems) {
+                    var newForm = document.createElement('form');
+                    var thisInputList = this.getElementsByTagName('input');
+                    //Запись в запрос выбранного дерева
+                    var myInput = createTreeListItem(thisInputList[0].value);
+                    newForm.appendChild(myInput);
+                    //Запись в запрос исходных деревьев
+                    var inputListtemp = document.getElementById('initialTreeSelect').getElementsByTagName('input');
+                    for (var i = 0; i < inputListtemp.length; i++) {
+                        var input = createTreeListItem(inputListtemp[i].value);
+                        newForm.appendChild(input);
+                    }
+                    tempFormData = newForm;
+                }
+                var formData = new FormData(tempFormData);
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetTree", "Mining")',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (result) {
+                        if (comparator) {
+                            document.getElementById("freqSupport").textContent = result.support;
+                            showTrees(result.treeList, 'freqInitialTreeSelect', 'freqTreesCanvas', 0, 0);
+                        }
+                        var canvasScreen = document.getElementById(canvasId);
+                        canvasScreen.width = result.width;
+                        canvasScreen.height = result.height;
+                        drawTree(result.nodes, result.lines, canvasId);
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+                });
+            }, false);
+            child.appendChild(form);
+            parent.appendChild(child);
+        }
+    }
+
+    //Отрисовка 1 дерева в элементе canvas
+    function drawTree(nodes, lines, canvasId) {
+        var c = document.getElementById(canvasId);
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height);
+        for (var j = 0; j < lines.length; j++) {
+            var line = lines[j];
+            ctx.beginPath();
+            ctx.moveTo(line.X1, line.Y1);
+            ctx.lineTo(line.X2, line.Y2);
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+        }
+        for (var i = 0; i < nodes.length; i++) {
+            ctx.beginPath();
+            ctx.arc(nodes[i].X, nodes[i].Y, nodes[i].R, 0, 2 * Math.PI);
+            if (nodes[i].Label.indexOf("(") !== -1 && nodes[i].Label.indexOf(")") !== -1) {
+                ctx.fillStyle = "green";
+                nodes[i].Label = nodes[i].Label.substr(1, nodes[i].Label.length - 2);
+            }
+            else
+                ctx.fillStyle = "gray";
+            ctx.fill();
+            ctx.font = "30px Arial";
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+            ctx.fillText(nodes[i].Label, nodes[i].X - nodes[i].R / 2, nodes[i].Y + nodes[i].R / 2);
+            ctx.stroke();
+        }
+    }
+
+    //Предварительная чистка списков перед поступлением новых данных
+    function clearTreeList(listId) {
+        var parent = document.getElementById(listId);
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+        return parent;
+    }
+
+    //Составление списка деревьев
+    function createTreeListItem(encoding) {
+        var input = document.createElement('input');
+        input.value = encoding;
+        input.readOnly = "readonly";
+        input.className = "treeEncoding";
+        input.name = "treeEncoding";
+        input.title = getTagEntry(encoding);
+        return input;
+    }
+
+    //Тэговая запись дерева
+    function getTagEntry(encoding) {
+        var dfs = encoding.split('@TextTreeEncoding.Separator');
+        var tagEntry = [];
+        var tagStack = [];
+        var offsetCounter = 0;
+        for (var i = 0; i < dfs.length; i++) {
+            if (dfs[i] !== "") {
+                if (dfs[i] !== "@TextTreeEncoding.UpSign") {
+                    var str = "";
+                    for (var j = 0; j < offsetCounter; j++) {
+                        str += "  ";
+                    }
+                    tagEntry.push(str + "<" + dfs[i] + ">");
+                    tagStack.push(dfs[i]);
+                    offsetCounter++;
+                }
+                else {
+                    offsetCounter--;
+                    var str = "";
+                    for (var j = 0; j < offsetCounter; j++) {
+                        str += "  ";
+                    }
+                    var elem = tagStack.pop();
+                    tagEntry.push(str + "</" + elem + ">");
+                }
+            }
+        }
+        fLen = tagEntry.length;
+        text = "";
+        for (i = 0; i < fLen; i++) {
+            text += tagEntry[i] + "\n";
+        }
+        return text;
+    }
+
+    //Подсветка при выборе дерева
+    function setListItemHighlight(listId, activeItem) {
+        var list = document.getElementById(listId).getElementsByTagName('form');
+        for (var i = 0; i < list.length; i++) {
+            list[i].style.background = "transparent";
+            list[i].getElementsByTagName('input')[0].style.color = "black";
+        }
+        activeItem.style.background = "green";
+        activeItem.getElementsByTagName('input')[0].style.color = "white";
     }
 </script>

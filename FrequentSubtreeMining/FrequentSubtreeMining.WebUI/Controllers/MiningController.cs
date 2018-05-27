@@ -5,22 +5,30 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using FrequentSubtreeMining.Algorithm.Models;
 using FrequentSubtreeMining.Algorithm;
-using System.Xml.Serialization;
 using System.Linq;
 using FrequentSubtreeMining.Algorithm.Tools;
 using static FrequentSubtreeMining.Algorithm.Tools.GraphDrawingHelper;
 
 namespace FrequentSubtreeMining.WebUI.Controllers
-{
-   
+{ 
     public class MiningController : Controller
     {
+        /// <summary>
+        /// GET-запрос отображения главной страницы приложения
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ViewResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Получение списка деревьев, в которых содержится заданное поддерево
+        /// </summary>
+        /// <param name="subtreeEncoding">Кодировка поддерева</param>
+        /// <param name="allInitialTrees">Список кодировок всех деревьев</param>
+        /// <returns>Список кодировок деревьев, в которых содержится заданное поддерево</returns>
         private List<string> GetInitialTreeEncodingsWithSubtree(string subtreeEncoding, List<string> allInitialTrees)
         {
             List<string> newInitialEncodings = new List<string>();
@@ -37,44 +45,40 @@ namespace FrequentSubtreeMining.WebUI.Controllers
         }
        
 
+        /// <summary>
+        /// POST-запрос получения данных для выбранного из списка дерева
+        /// </summary>
         [HttpPost]
-        public JsonResult GetNumb()
+        public JsonResult GetTree()
         {
             var form = Request.Form;
             var freqList = form.Get("treeEncoding").Split(',');
             if (freqList.Count() > 0)
             {
                 string freq = freqList[0];
-                List<string> newInitialEncodings = GetInitialTreeEncodingsWithSubtree(freq, freqList.Skip(1).ToList());
-              
+                List<string> newInitialEncodings = GetInitialTreeEncodingsWithSubtree(freq, freqList.Skip(1).ToList());             
                 Dictionary<int, List<string>> treeDict = GetDepthNodesDictionary(freq);
                 int maxDepth = treeDict.Keys.Max();
-
-                List<GraphNode> nodes = GetNodes(freq);
-                int maxChildCount = GetMaxChildNumber(nodes);
-
+                List<GraphNode> nodes = GetGraphNodes(freq);
+                int maxChildCount = nodes.Max(x => x.Children.Count);
                 double maxWidth = Math.Pow(maxChildCount, maxDepth - 1);
-
-                var root = nodes.Find(x => x.depth == 1);
-                root.x = 3 * root.r + (3 * root.r * ((int)maxWidth - 1) / 2);
-                int screenWidth = root.x * 2;
-                int screenHeight = maxDepth * 3 * root.r + 2 * root.r;
-
-                List<GraphNodeN> res = new List<GraphNodeN>();
-                GetListWithCoordinates(nodes, maxDepth, maxChildCount, root.r);
-
-                List<line> lineList = new List<line>();
+                var root = nodes.Find(x => x.Depth == 1);
+                root.X = 3 * root.R + (3 * root.R * ((int)maxWidth - 1) / 2);
+                int screenWidth = root.X * 2;
+                int screenHeight = maxDepth * 3 * root.R + 2 * root.R;
+                List<GraphNodeData> res = new List<GraphNodeData>();
+                GetListWithCoordinates(nodes, maxDepth, maxChildCount, root.R);
+                List<Line> lineList = new List<Line>();
                 GetLines(root, ref lineList);
-
-                foreach (var n in nodes)
+                foreach (GraphNode n in nodes)
                 {
-                    res.Add(new GraphNodeN()
+                    res.Add(new GraphNodeData()
                     {
-                        label = n.label,
-                        x = n.x,
-                        y = n.y,
-                        r = n.r,
-                        depth = n.depth
+                        Label = n.Label,
+                        X = n.X,
+                        Y = n.Y,
+                        R = n.R,
+                        Depth = n.Depth
                     });
                 }
                 if (freqList.Count() > 1)
@@ -86,6 +90,9 @@ namespace FrequentSubtreeMining.WebUI.Controllers
             return Json("Ошибка");
         }
       
+        /// <summary>
+        /// POST-запрос поиска частых поддеревьев по заданным параметрам поиска
+        /// </summary>
         [HttpPost]
         public JsonResult Search()
         {
@@ -94,9 +101,9 @@ namespace FrequentSubtreeMining.WebUI.Controllers
                 var form = Request.Form;
                 if (form != null)
                 {
-                    int minSize, maxSize, maxTime; double support;
+                    int minSize, maxSize/*, maxTime*/; double support;
                     if (!int.TryParse(form.Get("minSize"), out minSize) || !int.TryParse(form.Get("maxSize"), out maxSize) 
-                        || !double.TryParse(form.Get("support").Replace('.', ','), out support) || (!int.TryParse(form.Get("maxTime"), out maxTime)))
+                        || !double.TryParse(form.Get("support").Replace('.', ','), out support)/* || (!int.TryParse(form.Get("maxTime"), out maxTime))*/)
                     {
                         return Json(new { text = "Некорректный формат параметров поиска", code = -1 });
                     }
@@ -112,11 +119,11 @@ namespace FrequentSubtreeMining.WebUI.Controllers
                         List<XMLNode> NodeList = XMLReader.ReadXMLDocument(path);
                         if (NodeList != null && NodeList.Count > 0)
                         {
-                            SearchResult result = SubtreeMiner.Mine(NodeList, support, minSize, maxSize, maxTime);
+                            SearchResult result = SubtreeMiner.Mine(NodeList, support, minSize, maxSize/*, maxTime*/);
                             var docEncodings = new List<string>();
                             foreach (var tree in SearchParameters.initialTrees)
                             {
-                                docEncodings.Add(tree.ToString2());
+                                docEncodings.Add(tree.ToStringWithoutTreeId());
                             }
                             var resEncodings = new List<string>();
                             foreach (var tree in result.FrequentSubtrees)
@@ -128,12 +135,12 @@ namespace FrequentSubtreeMining.WebUI.Controllers
                         }
                         else
                         {
-                            return Json(new { text = "Некорректный формат файла: файл не содержит деревья для поиска", code = -1 });
+                            return Json(new { text = "Некорректный формат документа: документ не содержит деревья для поиска", code = -1 });
                         }
                     }
                     else
                     {
-                        return Json(new { text = "Файл не найден либо имеет некорректный формат", code = -1 });
+                        return Json(new { text = "Документ не найден либо имеет некорректный формат", code = -1 });
                     }
                 }
             }

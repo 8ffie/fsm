@@ -17,7 +17,7 @@ namespace FrequentSubtreeMining.Algorithm
         /// <param name="minNodeNumber">Минимальное число узлов</param>
         /// <param name="maxNodeNumber">Максимальное число узлов</param>
         /// <returns>Список частых поддеревьев</returns>
-        public static SearchResult Mine(List<XMLNode> nodeList, double support, int minNodeNumber, int maxNodeNumber, long maxTimeSeconds)
+        public static SearchResult Mine(List<XMLNode> nodeList, double support, int minNodeNumber, int maxNodeNumber/*, long maxTimeSeconds*/)
         {
             List<string> trees = InitializeTreeEncodings(nodeList, TextTreeEncoding.Separator, TextTreeEncoding.UpSign);
             List<TextTreeEncoding> encList = new List<TextTreeEncoding>();
@@ -33,7 +33,7 @@ namespace FrequentSubtreeMining.Algorithm
             }
             SearchParameters searchParams = new SearchParameters(support, minNodeNumber, maxNodeNumber);
             SearchParameters.treeNumber = encList.Count;
-            SearchParameters.maxTime = maxTimeSeconds * 1000; //в миллисекундах
+            //SearchParameters.maxTime = maxTimeSeconds * 1000; //в миллисекундах
             SearchParameters.initialTrees = encList;
             SubtreeMiner treeMiner = new SubtreeMiner(searchParams);
             SearchResult miningResult = treeMiner.Mine(encList);

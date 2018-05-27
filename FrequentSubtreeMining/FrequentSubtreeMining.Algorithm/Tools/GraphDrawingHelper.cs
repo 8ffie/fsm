@@ -1,82 +1,64 @@
 ﻿using FrequentSubtreeMining.Algorithm.Models;
-using FrequentSubtreeMining.Algorithm.XML;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrequentSubtreeMining.Algorithm.Tools
 {
-    public class GraphNode
+    #region Вспомогательные классы для отрисовки деревьев
+    public class GraphNodeData
     {
-        public string label;
-        public int depth;
-        public int x;
-        public int y;
-        public int r;
-        public GraphNode parent;
-        public List<GraphNode> children;
+        public string Label;
+        public int Depth;
+        public int X;
+        public int Y;
+        public int R;
+    }
 
+    public class GraphNode : GraphNodeData
+    {
+        public GraphNode Parent { get; set; }
+        public List<GraphNode> Children { get; set; }
 
         public static int SortByTag(GraphNode name1, GraphNode name2)
         {
-            return name1.label.CompareTo(name2.label);
+            return name1.Label.CompareTo(name2.Label);
         }
     }
 
-    public class GraphNodeN
+    public class Line
     {
-        public string label;
-        public int depth;
-        public int x;
-        public int y;
-        public int r;
+        public int X1;
+        public int X2;
+        public int Y1;
+        public int Y2;
     }
-
+    #endregion
 
     public class GraphDrawingHelper
     {
-        public static int GetMaxChildNumber(List<GraphNode> nodes)
+        /// <summary>
+        /// Получить координаты концов отрезков ребер графа
+        /// </summary>
+        /// <param name="node">Узел</param>
+        /// <param name="oldList">Список ребер графа</param>
+        public static void GetLines(GraphNode node, ref List<Line> oldList)
         {
-            int maxChildCount = 0;
-            foreach (var n1 in nodes)
+            if (node.Children.Count != 0)
             {
-                if (n1.children.Count > maxChildCount)
+                foreach (GraphNode child in node.Children)
                 {
-                    maxChildCount = n1.children.Count;
-                }
-            }
-            return maxChildCount;
-        }
-
-        public static void GetLines(GraphNode node, ref List<line> oldList)
-        {
-            if (node.children.Count != 0)
-            {
-                foreach (var child in node.children)
-                {
-                    line newLine = new line()
+                    Line newLine = new Line()
                     {
-                        x1 = node.x,
-                        y1 = node.y,
-                        x2 = child.x,
-                        y2 = child.y
+                        X1 = node.X,
+                        Y1 = node.Y,
+                        X2 = child.X,
+                        Y2 = child.Y
                     };
                     oldList.Add(newLine);
                     GetLines(child, ref oldList);
                 }
             }
         }
-
-        public class line
-        {
-            public int x1;
-            public int x2;
-            public int y1;
-            public int y2;
-        }
-
 
         /// <summary>
         /// Построение сетки с координатами деревьев 
@@ -106,10 +88,17 @@ namespace FrequentSubtreeMining.Algorithm.Tools
             return depthCoordinates;
         }
 
+        /// <summary>
+        /// Получить список координат узлов графа
+        /// </summary>
+        /// <param name="nodes">Узлы графа</param>
+        /// <param name="maxDepth">Максимальная глубина</param>
+        /// <param name="maxChildCount">Максимальное число потомков</param>
+        /// <param name="radius">Радиус</param>
         public static void GetListWithCoordinates(List<GraphNode> nodes, int maxDepth, int maxChildCount, int radius)
         {
             Dictionary<int, List<int>> depthCoordinates = GetDepthCoordinates(nodes, maxDepth, maxChildCount, radius);
-            GraphNode root = nodes.Find(x => x.depth == 1);
+            GraphNode root = nodes.Find(x => x.Depth == 1);
             List<int> currentRoute = new List<int>();
             for (int i = 0; i < maxDepth; i++)
             {
@@ -118,25 +107,32 @@ namespace FrequentSubtreeMining.Algorithm.Tools
             GetCoordinate(root, depthCoordinates, ref currentRoute);
         }
 
+        /// <summary>
+        /// Получение координат узла графа
+        /// </summary>
         private static void GetCoordinate(GraphNode node, Dictionary<int, List<int>> depthCoordinates, ref List<int> currentRoute)
         {
-            if (node.children.Count == 0)
+            if (node.Children.Count == 0)
             {
-                node.x = depthCoordinates[node.depth][currentRoute[node.depth - 1]];
-                currentRoute[node.depth - 1]++;
+                node.X = depthCoordinates[node.Depth][currentRoute[node.Depth - 1]];
+                currentRoute[node.Depth - 1]++;
             }
             else
             {
-                //node.children.Sort(GraphNode.SortByTag);
-                foreach (GraphNode child in node.children)
+                foreach (GraphNode child in node.Children)
                 {
                     GetCoordinate(child, depthCoordinates, ref currentRoute);
                 }
-                node.x = depthCoordinates[node.depth][currentRoute[node.depth - 1]];
-                currentRoute[node.depth - 1]++;
+                node.X = depthCoordinates[node.Depth][currentRoute[node.Depth - 1]];
+                currentRoute[node.Depth - 1]++;
             }
         }
 
+        /// <summary>
+        /// Получение словаря узлов дерева по глубинам
+        /// </summary>
+        /// <param name="encoding">Кодировка дерева</param>
+        /// <returns>Словарь узлов дерева по глубинам</returns>
         public static Dictionary<int, List<string>> GetDepthNodesDictionary(string encoding)
         {
             Dictionary<int, List<string>> depthNodesDict = new Dictionary<int, List<string>>();
@@ -166,7 +162,12 @@ namespace FrequentSubtreeMining.Algorithm.Tools
             return depthNodesDict;
         }
 
-        public static List<GraphNode> GetNodes(string treeEncoding)
+        /// <summary>
+        /// Получение данных узлов дерева для отрисовки
+        /// </summary>
+        /// <param name="treeEncoding">Кодировка дерева</param>
+        /// <returns>Список узлов с данными для отрисовки</returns>
+        public static List<GraphNode> GetGraphNodes(string treeEncoding)
         {
             List<GraphNode> results = new List<GraphNode>();
             Stack<GraphNode> currentNodeStack = new Stack<GraphNode>();
@@ -185,26 +186,25 @@ namespace FrequentSubtreeMining.Algorithm.Tools
                 {
                     depth++;
                     GraphNode nodeParent = (currentNodeStack.Count > 0) ? currentNodeStack.Peek() : null;
-                    int childrenCount = (nodeParent == null) ? 0 : nodeParent.children.Count;
+                    int childrenCount = (nodeParent == null) ? 0 : nodeParent.Children.Count;
                     GraphNode node = new GraphNode()
                     {
-                        depth = depth,
-                        label = token,
-                        r = radius,
-                        x = -1,
-                        y = 3 * radius * depth,
-                        parent = nodeParent,
-                        children = new List<GraphNode>()
+                        Depth = depth,
+                        Label = token,
+                        R = radius,
+                        X = -1,
+                        Y = 3 * radius * depth,
+                        Parent = nodeParent,
+                        Children = new List<GraphNode>()
                     };
                     if (currentNodeStack.Count > 0)
                     {
-                        currentNodeStack.Peek().children.Add(node);
+                        currentNodeStack.Peek().Children.Add(node);
                     }
                     currentNodeStack.Push(node);
                 }
             }
             return results;
         }
-
     }
 }

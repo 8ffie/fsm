@@ -79,12 +79,12 @@ D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\Syst
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\System.Web.WebPages.xml
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\System.Web.WebPages.Deployment.xml
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\System.Web.WebPages.Razor.xml
-D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\obj\Debug\FrequentSubtreeMining.WebUI.csprojResolveAssemblyReference.cache
-D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\obj\Debug\FrequentSubtreeMining.WebUI.dll
-D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\obj\Debug\FrequentSubtreeMining.WebUI.pdb
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\ru\System.Web.Helpers.resources.dll
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\ru\System.Web.Mvc.resources.dll
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\ru\System.Web.Razor.resources.dll
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\ru\System.Web.WebPages.resources.dll
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\ru\System.Web.WebPages.Deployment.resources.dll
 D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\bin\ru\System.Web.WebPages.Razor.resources.dll
+D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\obj\Debug\FrequentSubtreeMining.WebUI.csprojResolveAssemblyReference.cache
+D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\obj\Debug\FrequentSubtreeMining.WebUI.dll
+D:\Effie\Projects\FSM\FrequentSubtreeMining\FrequentSubtreeMining.WebUI\obj\Debug\FrequentSubtreeMining.WebUI.pdb

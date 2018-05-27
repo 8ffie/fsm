@@ -68,7 +68,7 @@ namespace FrequentSubtreeMining.Algorithm
             Stopwatch timeCounter = Stopwatch.StartNew();
             MaxDepth = Generate1NodeAnd2NodesTrees(treeSet);
             var depth = MaxDepth - 1;
-            while (depth >= 0 && timeCounter.ElapsedMilliseconds < SearchParameters.maxTime)
+            while (depth >= 0/* && timeCounter.ElapsedMilliseconds < SearchParameters.maxTime*/)
             {
                 Combine(depth);
                 Connect(--depth);

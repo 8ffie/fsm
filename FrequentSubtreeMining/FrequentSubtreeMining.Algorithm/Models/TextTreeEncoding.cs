@@ -26,15 +26,19 @@ namespace FrequentSubtreeMining.Algorithm.Models
         public TreeNode Root { get; set; }
 
         /// <summary>
-        /// Строковое представление дерева (кодировка)
+        /// Строковое представление дерева (кодировка) с номером дерева
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Строковое представление дерева</returns>
         public override string ToString()
         {
             return string.Format("{0}:{1}", TreeId, this.ToDfsStringWithIndex());
         }
 
-        public string ToString2()
+        /// <summary>
+        /// Строковое представление дерева (кодировка) без номера дерева
+        /// </summary>
+        /// <returns>Строковое представление дерева</returns>
+        public string ToStringWithoutTreeId()
         {
             return string.Format("{0}", this.ToDfsString());
         }

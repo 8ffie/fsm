@@ -2,13 +2,11 @@
     padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
@@ -20,54 +18,12 @@ textarea {
     padding-left: 3px;
 }
 
-canvas {
-    /*height: 250px;
-    width: 100%;*/
-}
-
 h1 {
     color: black;
 }
 
-.field-validation-error {
-    color: #f00;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-.input-validation-error {
-    border: 1px solid #f00;
-    background-color: #fee;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: #f00;
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-/* The progress container (grey background) */
-.progress-container {
-  width: 100%;
-  height: 8px;
-  background: #ccc;
-}
-
-/* The progress bar (scroll indicator) */
-.progress-bar {
-  height: 8px;
-  background: #4caf50;
-  width: 0%;
-}
 
 #result {
-  /*padding: 100px 0;*/
-  /*margin: 50px auto 0 auto;*/
   width: 80%;
 }
 
@@ -77,30 +33,22 @@ h1 {
     overflow-x: auto;
 }
 
-            .encodingList{
-                overflow-y: auto;
-                overflow-x: auto;
-                max-height: 300px;
-            }
-                .vertical-list a {
-                    background-color: #eee; /* Grey background color */
-                    color: black; /* Black text color */
-                    display: block; /* Make the links appear below each other */
-                    text-decoration: none; /* Remove underline from links */
-                }
+.encodingList {
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 300px;
+}
 
-                    .vertical-list a:hover {
-                        background-color: #ccc; /* Dark grey background on mouse-over */
-                    }
+.vertical-list a {
+    background-color: #eee;
+    color: black;
+    display: block; 
+    text-decoration: none;
+}
 
-                    .vertical-list a.active {
-                        background-color: #4CAF50; /* Add a green color to the "active/current" link */
-                        color: white;
-                    }
-
-                    #searchResults {
-                        padding-top: 50px;
-                    }
+    .vertical-list a:hover {
+        background-color: #ccc; /* Dark grey background on mouse-over */
+    }
 
 #loader {
   position: absolute;
@@ -129,7 +77,6 @@ h1 {
   100% { transform: rotate(360deg); }
 }
 
-/* Add animation to "page content" */
 .animate-bottom {
   position: relative;
   -webkit-animation-name: animatebottom;
@@ -150,4 +97,10 @@ h1 {
 
 #searchResults {
   display: none;
+  padding-top: 50px;
+}
+
+.panel-default {
+    display: block;
+    max-width: 800px;
 }

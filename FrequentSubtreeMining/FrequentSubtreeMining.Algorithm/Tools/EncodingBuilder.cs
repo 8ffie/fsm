@@ -62,7 +62,7 @@ namespace FrequentSubtreeMining.Algorithm.Tools
         {
             string[] treeInStringArr = treeInString.Split(new[] { TextTreeEncoding.Separator, ' ' }, StringSplitOptions.RemoveEmptyEntries);
             TextTreeEncoding tree = new TextTreeEncoding();
-            DoConvert2(treeInStringArr, tree);
+            DoConvertWithoutTreeId(treeInStringArr, tree);
             return tree;
         }
 
@@ -71,7 +71,7 @@ namespace FrequentSubtreeMining.Algorithm.Tools
         /// </summary>
         /// <param name="treeInStringArr">Список кодов дерева</param>
         /// <param name="tree">Объект кодировки дерева</param>
-        private static void DoConvert2(IList<string> treeInStringArr, TextTreeEncoding tree)
+        private static void DoConvertWithoutTreeId(IList<string> treeInStringArr, TextTreeEncoding tree)
         {
             Debug.Assert(treeInStringArr != null && treeInStringArr.Count >= 2, "Ошибка при конвертации: недостаточно символов в записи дерева");
             Debug.Assert(!treeInStringArr[0].Equals(TextTreeEncoding.UpSign.ToString()), string.Format("Ошибка при конвертации: недопустимый первый символ '{0}'", TextTreeEncoding.UpSign));
