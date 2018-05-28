@@ -107,6 +107,11 @@ namespace FrequentSubtreeMining.WebUI.Controllers
                     {
                         return Json(new { text = "Некорректный формат параметров поиска", code = -1 });
                     }
+                    double tempSup;
+                    if (support > 1 && double.TryParse(form.Get("support"), out tempSup))
+                    {
+                        support = tempSup;
+                    }
                     if (Request.Files.Count > 0)
                     {
                         var file = Request.Files[0];

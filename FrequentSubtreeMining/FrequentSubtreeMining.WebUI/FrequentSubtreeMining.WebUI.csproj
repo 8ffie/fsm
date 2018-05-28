@@ -147,6 +147,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\Algorithm.cs" />
+    <Compile Include="Algorithm\Models\DepthEntries.cs" />
+    <Compile Include="Algorithm\Models\ExtendedSubtrees.cs" />
+    <Compile Include="Algorithm\Models\FrequentSubtrees.cs" />
+    <Compile Include="Algorithm\Models\RootEntry.cs" />
+    <Compile Include="Algorithm\Models\SearchParameters.cs" />
+    <Compile Include="Algorithm\Models\SearchResult.cs" />
+    <Compile Include="Algorithm\Models\SubtreeEntry.cs" />
+    <Compile Include="Algorithm\Models\TextTreeEncoding.cs" />
+    <Compile Include="Algorithm\Models\Tree.cs" />
+    <Compile Include="Algorithm\Models\TreeEntries.cs" />
+    <Compile Include="Algorithm\SubtreeMiner.cs" />
+    <Compile Include="Algorithm\Tools\Converter.cs" />
+    <Compile Include="Algorithm\Tools\DfsIndexBuilder.cs" />
+    <Compile Include="Algorithm\Tools\EncodingBuilder.cs" />
+    <Compile Include="Algorithm\Tools\GraphDrawingHelper.cs" />
+    <Compile Include="Algorithm\Tools\SubtreeExtension.cs" />
+    <Compile Include="Algorithm\XML\TreeNode.cs" />
+    <Compile Include="Algorithm\XML\XMLNode.cs" />
+    <Compile Include="Algorithm\XML\XMLReader.cs" />
+    <Compile Include="Algorithm\XML\XMLTreeEncoding.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -158,12 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FrequentSubtreeMining.Algorithm\FrequentSubtreeMining.Algorithm.csproj">
-      <Project>{3AB81D01-033D-41ED-B3AB-FB867752C2E9}</Project>
-      <Name>FrequentSubtreeMining.Algorithm</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
